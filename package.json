@@ -2,25 +2,26 @@
   "name": "moji",
   "version": "1.0.0",
   "description": "Moji is an emoji decoder",
-  "main": "index.js",
+  "main": "moji.js",
   "author": "Mikal Krogstad",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "emoji-dictionary": "^1.0.11",
-    "emoji-unicode": "^2.0.1",
-    "emojilib": "^3.0.10",
-    "express": "^4.18.2"
+    "body-parser": "1.20.2",
+    "emoji-dictionary": "1.0.11",
+    "emoji-unicode": "2.0.1",
+    "emojilib": "3.0.10",
+    "express": "4.18.2"
   },
   "devDependencies": {
-    "chai": "^4.3.7",
-    "eslint": "^8.40.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
-    "mocha": "^10.2.0",
-    "supertest": "^6.3.3"
+    "chai": "4.3.7",
+    "eslint": "8.40.0",
+    "husky": "8.0.3",
+    "lint-staged": "13.2.2",
+    "mocha": "10.2.0",
+    "supertest": "6.3.3"
   },
   "scripts": {
+    "start": "node moji.js",
     "test": "mocha",
     "lint": "eslint ."
   },
@@ -36,3 +37,4 @@
     ]
   }
 }
+
