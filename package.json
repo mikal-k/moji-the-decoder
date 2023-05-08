@@ -2,7 +2,7 @@
   "name": "moji",
   "version": "1.0.0",
   "description": "Moji is an emoji decoder",
-  "main": "index.js",
+  "main": "moji.js",
   "author": "Mikal Krogstad",
   "license": "ISC",
   "dependencies": {
@@ -21,6 +21,7 @@
     "supertest": "6.3.3"
   },
   "scripts": {
+    "start": "node moji.js",
     "test": "mocha",
     "lint": "eslint ."
   },
