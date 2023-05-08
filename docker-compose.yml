@@ -7,6 +7,6 @@ services:
     volumes:
       - .:/usr/src/app
     ports:
-      - "3000:3000"
+      - "2950:2950"
     command: npm start
 
