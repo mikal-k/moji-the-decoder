@@ -9,10 +9,10 @@ const emojiUnicode = require('emoji-unicode');
 // Creating Express app
 const app = express();
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('public_html'));
 
 // Starting server and listening on port, dynamic if test env
-const port = process.env.NODE_ENV === 'test' ? 0 : 3000;
+const port = process.env.NODE_ENV === 'test' ? 0 : 2950;
 const server = app.listen(port, () => {
   console.log(`Moji server listening on port ${port}!`);
 });
