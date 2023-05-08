@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moji the Decoder</title>
+  
+  <!-- Load Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" integrity="sha512-SkxoGgDx8fZ78ckE+FePyz1hVXY9G8Igs+VfoGyf6FJeVljjJ+wxUZz6UZg6UuJ7vjXQ/GIVWgnqk3w+JRmwVw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Load custom CSS -->
+  <link rel="stylesheet" href="fluffyclouds.css">
+  
+</head>
+
+<body>
+  <h1>👁️‍🗨️🤖 Moji the Decoder </h1>
+  <form id="decode-form">
+    <label for="emoji-input">Enter Emoji:</label>
+    <div class="form-group">
+      <input type="text" class="form-control" id="emoji-input" required>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Decode</button>
+    </div>
+  </form>
+
+  <div id="result"></div>
+  
+  <!-- Load jQuery and Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-QlRbRtM1Jv8QGk6NYG7Bgs+izbJCOc8anWx3q4eg4+4PHBJkxdUJXkW+MU5j6YJSCyf5Uxjm5l6ju5U5Q5G9dQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <script>
+    document.getElementById('decode-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const emojiInput = document.getElementById('emoji-input');
+      const resultDiv = document.getElementById('result');
+      const emoji = emojiInput.value;
+
+      if (!emoji) {
+        resultDiv.textContent = 'Please enter an emoji.';
+        return;
+      }
+
+      const response = await fetch('/decode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emoji }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        resultDiv.innerHTML = `Emoji name: ${data.name}<br>Hex code: ${data.hexcode}`; 
+      } else {
+        resultDiv.textContent = 'Error: Could not decode emoji.';
+      }
+    });
+  </script>
+  
+</body>
+</html>
+
