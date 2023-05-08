@@ -1,4 +1,4 @@
-# Moji The Decoder
+# Moji The Decoder 👁️‍🗨️🤖
 An emoji decoder written in Node.js.
 
 Start:
