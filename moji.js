@@ -25,11 +25,11 @@ app.post('/decode', (req, res) => {
     return;
   }
 
-  // Looking up emoji name and handling null/undefined results, generate hex code
+  // Looking up emoji name and handling null/undefined results, generate codepoint
   let emojiName = EmojiDictionary.getName(emoji);
   emojiName = emojiName === "null" || !emojiName ? '(unknown)' : emojiName;
-  const hexcode = `U+${emojiUnicode(emoji).toUpperCase()}`;
-  res.json({ name: emojiName, hexcode: hexcode });
+  const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
+  res.json({ name: emojiName, codepoint: codepoint });
 });
 
 // Exporting the Express app and server instances for testing
