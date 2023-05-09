@@ -6,15 +6,33 @@
   <title>Moji the Decoder</title>
   
   <!-- Load Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" integrity="sha512-SkxoGgDx8fZ78ckE+FePyz1hVXY9G8Igs+VfoGyf6FJeVljjJ+wxUZz6UZg6UuJ7vjXQ/GIVWgnqk3w+JRmwVw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" integrity="sha512-usVBAd66/NpVNfBge19gws2j6JZinnca12rAe2l+d+QkLU9fiG02O1X8Q6hepIpr/EYKZvKx/I9WsnujJuOmBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
   <!-- Load custom CSS -->
-  <link rel="stylesheet" href="fluffyclouds.css">
+  <link rel="stylesheet" href="neo.css">
   
 </head>
 
 <body>
-  <h1>👁️‍🗨️🤖 Moji the Decoder </h1>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute">
+  <filter id="retro-logo-filter">
+    <feFlood flood-color="var(--primary-color)" result="flood" />
+    <feComposite in="SourceGraphic" in2="flood" operator="in" result="masked" />
+    <feMorphology in="masked" operator="dilate" radius="1" result="outline" />
+    <feFlood flood-color="var(--text-color)" result="text-stroke" />
+    <feComposite in="text-stroke" in2="outline" operator="in" result="text-stroke" />
+    <feMerge>
+      <feMergeNode in="text-stroke" />
+      <feMergeNode in="SourceGraphic" />
+    </feMerge>
+  </filter>
+</svg>
+<div class="hodefolie">
+  <h1>
+    <span class="robot">👁️‍🗨️🤖</span>
+    <span class="terminator">Moji the Decoder</span>
+ </h1>
+</div>
   <form id="decode-form">
     <label for="emoji-input">Enter Emoji:</label>
     <div class="form-group">
@@ -28,8 +46,8 @@
   <div id="result"></div>
   
   <!-- Load jQuery and Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-QlRbRtM1Jv8QGk6NYG7Bgs+izbJCOc8anWx3q4eg4+4PHBJkxdUJXkW+MU5j6YJSCyf5Uxjm5l6ju5U5Q5G9dQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
   <script>
     document.getElementById('decode-form').addEventListener('submit', async function(event) {
