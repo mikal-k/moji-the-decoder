@@ -1,5 +1,5 @@
 # Moji The Decoder 👁️‍🗨️🤖
-An emoji decoder written in Node.js.
+A ZWJ emoji decoder written in Node.js.
 
 Start:
 node index.js
