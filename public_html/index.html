@@ -109,9 +109,14 @@
           if (response.ok) {
             const data = await response.json();
             resultDiv.innerHTML = `Emoji name: ${data.name}<br>Codepoint: ${data.codepoint}`;
-            window.history.pushState({}, '', `?emoji=${encodeURIComponent(emojiInput.value)}`);
+            window.history.pushState(
+              {},
+              "",
+              `?emoji=${encodeURIComponent(emojiInput.value)}`,
+            );
           } else {
-            resultDiv.textContent = "Error: Could not decode emoji. Please try again.";
+            resultDiv.textContent =
+              "Error: Could not decode emoji. Please try again.";
           }
         });
     </script>
