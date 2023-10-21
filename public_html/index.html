@@ -95,8 +95,8 @@
           function updateURLWithEmoji(emoji) {
             let url = new URL(window.location.href);
             let params = new URLSearchParams(url.search);
-            params.set('emoji', emoji);
-            window.history.replaceState({}, '', `${url.pathname}?${params}`);
+            params.set("emoji", emoji);
+            window.history.replaceState({}, "", `${url.pathname}?${params}`);
           }
 
           if (!emoji) {
