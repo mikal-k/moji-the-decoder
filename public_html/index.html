@@ -114,7 +114,7 @@
 
           if (response.ok) {
             const data = await response.json();
-            resultDiv.innerHTML = `Emoji name: ${data.name}<br>Codepoint: ${data.codepoint}`;
+            resultDiv.innerHTML = `Emoji name: ${data.emojiName}<br>Codepoint: ${data.emojiCodepoint}`;
           } else {
             resultDiv.textContent = "Error: Could not decode emoji.";
           }
