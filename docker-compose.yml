@@ -12,4 +12,3 @@ services:
     ports:
       - 2950:2950
     command: npm start
-
