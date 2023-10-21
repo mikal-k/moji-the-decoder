@@ -113,7 +113,7 @@
             resultDiv.textContent = "Error: Could not parse server response.";
             return;
           }
-          
+
           if (response.ok && data.name && data.codepoint) {
             resultDiv.innerHTML = `Emoji name: ${data.name}<br>Codepoint: ${data.codepoint}`;
           } else {
