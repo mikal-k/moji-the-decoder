@@ -27,8 +27,14 @@ app.post("/decode", (req, res) => {
 
   // Looking up emoji name and handling null/undefined results, generate codepoint
   let emojiName = EmojiDictionary.getName(emoji);
-  emojiName = emojiName === "null" || !emojiName ? "(unknown)" : emojiName;
-  const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
+  emojiName = emojiName === null || !emojiName ? "(unknown)" : emojiName;
+  let codepoint;
+  try {
+    codepoint = `U+${emojiUnicode(emoji)}`;
+  } catch (error) {
+    res.status(500).json({ error: "Could not generate code point for emoji" });
+    return;
+  }
   res.json({ name: emojiName, codepoint: codepoint });
 });
 app.get("/:emoji", (req, res) => {
