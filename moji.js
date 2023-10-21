@@ -5,7 +5,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const EmojiDictionary = require('emoji-dictionary');
 const emojiUnicode = require('emoji-unicode');
-const url = require('url');
 
 // Creating Express app
 const app = express();
