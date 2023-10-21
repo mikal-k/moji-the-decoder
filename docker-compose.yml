@@ -10,6 +10,6 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - "2950:2950"
+      - 2950:2950
     command: npm start
 
