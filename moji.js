@@ -29,7 +29,7 @@ app.post("/decode", (req, res) => {
   let emojiName = EmojiDictionary.getName(emoji);
   emojiName = emojiName === "null" || !emojiName ? "(unknown)" : emojiName;
   const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
-  res.json({ name: emojiName, codepoint: codepoint });
+  res.json({ emojiName: emojiName, emojiCodepoint: codepoint });
 });
 app.get("/:emoji", (req, res) => {
   const emoji = decodeURIComponent(req.params.emoji);
@@ -42,7 +42,7 @@ app.get("/:emoji", (req, res) => {
   let emojiName = EmojiDictionary.getName(emoji);
   emojiName = emojiName === "null" || !emojiName ? "(unknown)" : emojiName;
   const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
-  res.json({ name: emojiName, codepoint: codepoint });
+  res.json({ emojiName: emojiName, emojiCodepoint: codepoint });
 });
 
 // Exporting the Express app and server instances for testing
