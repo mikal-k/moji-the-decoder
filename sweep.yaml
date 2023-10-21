@@ -9,6 +9,9 @@ rules:
   - "Comments should be used to explain complex code or provide additional context."
   - "Unused code or commented out code should be removed."
   - "Code should be organized into logical sections and functions should have a clear purpose."
+  - "All functions should have corresponding tests."
+  - "All API endpoints should return the correct status codes."
+  - "All error handling should be properly implemented."
 
 # This is the branch that Sweep will develop from and make pull requests to. Most people use 'main' or 'master' but some users also use 'dev' or 'staging'.
 branch: 'main'
