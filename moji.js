@@ -29,7 +29,7 @@ app.post("/decode", (req, res) => {
   let emojiName = EmojiDictionary.getName(emoji);
   emojiName = emojiName === "" ? "(unknown)" : emojiName;
   const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
-  if (codepoint === 'U+') {
+  if (codepoint === "U+") {
     res.status(400).json({ error: "Invalid emoji" });
     return;
   }
