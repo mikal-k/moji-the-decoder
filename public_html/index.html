@@ -55,6 +55,7 @@
       const emojiInput = document.getElementById('emoji-input');
       const resultDiv = document.getElementById('result');
       const emoji = emojiInput.value;
+      updateURLWithEmoji(emoji);
 
       if (!emoji) {
         resultDiv.textContent = 'Please enter an emoji.';
