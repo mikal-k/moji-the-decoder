@@ -42,5 +42,48 @@ describe('Moji the Decoder', () => {
     expect(res.statusCode).to.equal(200);
     expect(res.body).to.have.property('error', 'No emoji provided');
   });
+
+  // New business logic tests
+  describe('New Business Logic', () => {
+    it('should handle empty inputs', async () => {
+      // Test code here
+    });
+
+    it('should handle null inputs', async () => {
+      // Test code here
+    });
+
+    it('should handle undefined inputs', async () => {
+      // Test code here
+    });
+
+    it('should handle inputs of the wrong type', async () => {
+      const res = await request(app)
+        .post('/decode')
+        .send({ emoji: 123 });
+    
+      expect(res.statusCode).to.equal(400);
+      expect(res.body).to.have.property('error', 'Invalid emoji provided');
+    });
+
+    it('should handle inputs with extreme values', async () => {
+      const res = await request(app)
+        .post('/decode')
+        .send({ emoji: '😀'.repeat(1000) });
+    
+      expect(res.statusCode).to.equal(400);
+      expect(res.body).to.have.property('error', 'Emoji is too long');
+    });
+
+    it('should handle typical inputs', async () => {
+      const res = await request(app)
+        .post('/decode')
+        .send({ emoji: '😀' });
+    
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.have.property('name', 'grinning');
+      expect(res.body).to.have.property('codepoint', 'U+1F600');
+    });
+  });
 });
 
