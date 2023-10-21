@@ -106,8 +106,15 @@
             body: JSON.stringify({ emoji }),
           });
 
-          if (response.ok) {
-            const data = await response.json();
+          let data;
+          try {
+            data = await response.json();
+          } catch (error) {
+            resultDiv.textContent = "Error: Could not parse server response.";
+            return;
+          }
+          
+          if (response.ok && data.name && data.codepoint) {
             resultDiv.innerHTML = `Emoji name: ${data.name}<br>Codepoint: ${data.codepoint}`;
           } else {
             resultDiv.textContent = "Error: Could not decode emoji.";
