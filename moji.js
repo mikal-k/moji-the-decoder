@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const EmojiDictionary = require('emoji-dictionary');
 const emojiUnicode = require('emoji-unicode');
+const url = require('url');
 
 // Creating Express app
 const app = express();
@@ -20,6 +21,19 @@ const server = app.listen(port, () => {
 // Handling POST requests to /decode
 app.post('/decode', (req, res) => {
   const { emoji } = req.body;
+  if (!emoji) {
+    res.status(200).json({ error: 'No emoji provided' });
+    return;
+  }
+
+  // Looking up emoji name and handling null/undefined results, generate codepoint
+  let emojiName = EmojiDictionary.getName(emoji);
+  emojiName = emojiName === "null" || !emojiName ? '(unknown)' : emojiName;
+  const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
+  res.json({ name: emojiName, codepoint: codepoint });
+});
+app.get('/:emoji', (req, res) => {
+  const emoji = decodeURIComponent(req.params.emoji);
   if (!emoji) {
     res.status(200).json({ error: 'No emoji provided' });
     return;
