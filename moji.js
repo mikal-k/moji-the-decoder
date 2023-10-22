@@ -29,13 +29,15 @@ app.post("/decode", (req, res) => {
   const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
 
   // Retrieving the information for each component of the emoji
-  const info = components.map(component => {
+  const info = components.map((component) => {
     let name = EmojiDictionary.getName(component);
     name = name === "null" || !name ? "(unknown)" : name;
     const codepoint = `U+${emojiUnicode(component).toUpperCase()}`;
 
     // Debug logging
-    console.log(`Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`);
+    console.log(
+      `Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`,
+    );
 
     return { name, codepoint };
   });
@@ -53,13 +55,15 @@ app.get("/:emoji", (req, res) => {
   const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
 
   // Retrieving the information for each component of the emoji
-  const info = components.map(component => {
+  const info = components.map((component) => {
     let name = EmojiDictionary.getName(component);
     name = name === "null" || !name ? "(unknown)" : name;
     const codepoint = `U+${emojiUnicode(component).toUpperCase()}`;
 
     // Debug logging
-    console.log(`Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`);
+    console.log(
+      `Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`,
+    );
 
     return { name, codepoint };
   });
