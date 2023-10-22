@@ -25,11 +25,24 @@ app.post("/decode", (req, res) => {
     return;
   }
 
-  // Looking up emoji name and handling null/undefined results, generate codepoint
-  let emojiName = EmojiDictionary.getName(emoji);
-  emojiName = emojiName === "null" || !emojiName ? "(unknown)" : emojiName;
-  const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
-  res.json({ emojiName: emojiName, emojiCodepoint: codepoint });
+  // Splitting the emoji into its components if it contains a ZWJ
+  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
+
+  // Retrieving the information for each component of the emoji
+  const info = components.map((component) => {
+    let name = EmojiDictionary.getName(component);
+    name = name === "null" || !name ? "(unknown)" : name;
+    const codepoint = `U+${emojiUnicode(component).toUpperCase()}`;
+
+    // Debug logging
+    console.log(
+      `Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`,
+    );
+
+    return { name, codepoint };
+  });
+
+  res.json(info);
 });
 app.get("/:emoji", (req, res) => {
   const emoji = decodeURIComponent(req.params.emoji);
@@ -38,11 +51,24 @@ app.get("/:emoji", (req, res) => {
     return;
   }
 
-  // Looking up emoji name and handling null/undefined results, generate codepoint
-  let emojiName = EmojiDictionary.getName(emoji);
-  emojiName = emojiName === "null" || !emojiName ? "(unknown)" : emojiName;
-  const codepoint = `U+${emojiUnicode(emoji).toUpperCase()}`;
-  res.json({ emojiName: emojiName, emojiCodepoint: codepoint });
+  // Splitting the emoji into its components if it contains a ZWJ
+  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
+
+  // Retrieving the information for each component of the emoji
+  const info = components.map((component) => {
+    let name = EmojiDictionary.getName(component);
+    name = name === "null" || !name ? "(unknown)" : name;
+    const codepoint = `U+${emojiUnicode(component).toUpperCase()}`;
+
+    // Debug logging
+    console.log(
+      `Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`,
+    );
+
+    return { name, codepoint };
+  });
+
+  res.json(info);
 });
 
 // Exporting the Express app and server instances for testing
