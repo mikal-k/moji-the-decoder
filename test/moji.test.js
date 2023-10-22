@@ -55,23 +55,24 @@ describe('Moji the Decoder', () => {
   });
 });
 
-  it('POST /decode should return (unknown) and hexcode for an unknown emoji', async () => {
-    const res = await request(app)
-      .post('/decode')
-      .send({ emoji: '🧑‍🚀' });
+    it('POST /decode should return (unknown) and hexcode for an unknown emoji', async () => {
+      const res = await request(app)
+        .post('/decode')
+        .send({ emoji: '🧑‍🚀' });
 
-    expect(res.statusCode).to.equal(200);
-    expect(res.body).to.have.property('name', '(unknown)');
-    expect(res.body).to.have.property('codepoint', 'U+1F9D1 200D 1F680');
-  });
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.have.property('name', '(unknown)');
+      expect(res.body).to.have.property('codepoint', 'U+1F9D1 200D 1F680');
+    });
 
-  it('POST /decode should return an error message if no emoji is sent', async () => {
-    const res = await request(app)
-      .post('/decode')
-      .send({ emoji: '' });
+    it('POST /decode should return an error message if no emoji is sent', async () => {
+      const res = await request(app)
+        .post('/decode')
+        .send({ emoji: '' });
 
-    expect(res.statusCode).to.equal(200);
-    expect(res.body).to.have.property('error', 'No emoji provided');
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.have.property('error', 'No emoji provided');
+    });
   });
 });
 
