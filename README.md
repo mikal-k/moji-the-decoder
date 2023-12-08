@@ -12,7 +12,15 @@ Modules used for the app:
 
 Modules used for linting and testing:
 
+# Instructions:
+• Add instructions for installing dependencies in the 'README.md' file. This will guide users to install all necessary dependencies before running the application.
+• Under the "Installation" section, add the following instructions:
+  - Navigate to the root directory of the project where the 'package.json' file is located.
+  - Run the command 'npm install' in the terminal. This will install all the dependencies listed in the 'package.json' file.
+  - After the installation is complete, run the application with the command 'node moji.js'.
+
 # User Interface (UI) Changes:
+
 The latest update to Moji The Decoder has introduced several new changes to the user interface to improve the visualization of Zero Width Joiner (ZWJ) emojis. Notable changes include:
 
 - **Character Segmentation Display**: ZWJ emojis are now displayed in distinct boxes for each joined character, enabling better representation and understanding of the emoji composition.
