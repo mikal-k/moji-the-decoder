@@ -13,6 +13,11 @@ function displayEmojiDetails(emojiComponents) {
   const resultDiv = document.getElementById('result');
   resultDiv.innerHTML = '';
   emojiComponents.forEach(component => {
+    // Handle case where name or codepoint is undefined
+    if (component.name === undefined || component.codepoint === undefined) {
+      displayFeedback('Emoji not recognized');
+      return;
+    }
     const box = createEmojiBox(component);
     resultDiv.appendChild(box);
   });
