@@ -34,6 +34,11 @@ app.post("/decode", (req, res) => {
     name = name === "null" || !name ? "(unknown)" : name;
     const codepoint = `U+${emojiUnicode(component).toUpperCase()}`;
 
+    if (name === "(unknown)" || typeof codepoint === 'undefined') {
+      res.status(200).json({ error: "Emoji not recognized" });
+      return;
+    }
+
     // Debug logging
     console.log(
       `Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`,
