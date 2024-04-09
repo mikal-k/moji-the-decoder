@@ -85,42 +85,37 @@
     ></script>
 
     <script>
-      document
-        .getElementById("decode-form")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-          const emojiInput = document.getElementById("emoji-input");
-          const resultDiv = document.getElementById("result");
-          const emoji = emojiInput.value;
-          updateURLWithEmoji(emoji);
-          function updateURLWithEmoji(emoji) {
-            let url = new URL(window.location.href);
-            let params = new URLSearchParams(url.search);
-            params.set("emoji", emoji);
-            window.history.replaceState({}, "", `${url.pathname}?${params}`);
-          }
+    document.getElementById("decode-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const emojiInput = document.getElementById("emoji-input");
+  const resultDiv = document.getElementById("result");
+  const emoji = emojiInput.value;
+  
+  if (!emoji) {
+    resultDiv.textContent = "Please enter an emoji.";
+    return;
+  }
 
-          if (!emoji) {
-            resultDiv.textContent = "Please enter an emoji.";
-            return;
-          }
+  const response = await fetch("/decode", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ emoji }),
+  });
 
-          const response = await fetch("/decode", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ emoji }),
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            resultDiv.innerHTML = `Emoji name: ${data.name}<br>Codepoint: ${data.codepoint}`;
-          } else {
-            resultDiv.textContent = "Error: Could not decode emoji.";
-          }
-        });
-    </script>
+  if (response.ok) {
+    const data = await response.json();
+    if(data.error) {
+      resultDiv.textContent = `Error: ${data.error}`;
+    } else {
+      resultDiv.innerHTML = data.map(e => `Emoji name: ${e.name}<br>Codepoint: ${e.codepoint}`).join('<br>');
+    }
+  } else {
+    resultDiv.textContent = "Error: Could not decode emoji.";
+  }
+});
+</script>
     <script src="emojiDetails.js"></script>
   </body>
 </html>
