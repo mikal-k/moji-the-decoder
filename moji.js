@@ -42,6 +42,8 @@ app.post("/decode", (req, res) => {
     return { name, codepoint };
   });
 
+  console.log("Response data:", info); // Log the response data
+
   res.json(info);
 });
 app.get("/:emoji", (req, res) => {
