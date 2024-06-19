@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const EmojiDictionary = require("emoji-dictionary");
 const emojiUnicode = require("emoji-unicode");
-const TwemojiParser = require("twemoji-parser");
+const nodeEmoji = require("node-emoji");
 
 // Creating Express app
 const app = express();
@@ -18,6 +18,20 @@ const server = app.listen(port, () => {
   console.log(`Moji server listening on port ${port}!`);
 });
 
+// Function to get emoji name with fallback
+function getEmojiName(emoji) {
+  let name = EmojiDictionary.getName(emoji);
+  if (name === "null" || !name) {
+    const emojiFromNode = nodeEmoji.find(emoji);
+    if (emojiFromNode) {
+      name = emojiFromNode.key;
+    } else {
+      name = "(unknown)";
+    }
+  }
+  return name;
+}
+
 // Handling POST requests to /decode
 app.post("/decode", (req, res) => {
   const { emoji } = req.body;
@@ -26,20 +40,16 @@ app.post("/decode", (req, res) => {
     return;
   }
 
-  // Parsing the emoji into its components using twemoji-parser
-  const components = TwemojiParser.parse(emoji, { assetType: "png" });
+  // Splitting the emoji into its components if it contains a ZWJ
+  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
 
   // Retrieving the information for each component of the emoji
   const info = components.map((component) => {
-    const emojiChar = component.text;
-    let name = EmojiDictionary.getName(emojiChar);
-    name = name === "null" || !name ? "(unknown)" : name;
-    const codepoint = emojiUnicode(emojiChar).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
+    const name = getEmojiName(component);
+    const codepoint = emojiUnicode(component).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
 
     // Debug logging
-    console.log(
-      `Component: ${emojiChar}, Name: ${name}, Codepoint: ${codepoint}`,
-    );
+    console.log(`Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`);
 
     return { name, codepoint };
   });
@@ -56,20 +66,16 @@ app.get("/:emoji", (req, res) => {
     return;
   }
 
-  // Parsing the emoji into its components using twemoji-parser
-  const components = TwemojiParser.parse(emoji, { assetType: "png" });
+  // Splitting the emoji into its components if it contains a ZWJ
+  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
 
   // Retrieving the information for each component of the emoji
   const info = components.map((component) => {
-    const emojiChar = component.text;
-    let name = EmojiDictionary.getName(emojiChar);
-    name = name === "null" || !name ? "(unknown)" : name;
-    const codepoint = emojiUnicode(emojiChar).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
+    const name = getEmojiName(component);
+    const codepoint = emojiUnicode(component).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
 
     // Debug logging
-    console.log(
-      `Component: ${emojiChar}, Name: ${name}, Codepoint: ${codepoint}`,
-    );
+    console.log(`Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`);
 
     return { name, codepoint };
   });
@@ -79,3 +85,4 @@ app.get("/:emoji", (req, res) => {
 
 // Exporting the Express app and server instances for testing
 module.exports = { app, server };
+

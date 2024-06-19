@@ -2,7 +2,7 @@
 A ZWJ emoji decoder written in Node.js.
 
 Start:
-node index.js
+node moji.js
 
 Modules used for the app: 
 - `express` provides a web framework
