@@ -1,10 +1,8 @@
-// Moji the Decoder
-// An emoji lookup tool by Mikal Krogstad
-// (Early beta)
 const express = require("express");
 const bodyParser = require("body-parser");
 const EmojiDictionary = require("emoji-dictionary");
 const emojiUnicode = require("emoji-unicode");
+const TwemojiParser = require("twemoji-parser");
 
 // Creating Express app
 const app = express();
@@ -28,18 +26,19 @@ app.post("/decode", (req, res) => {
     return;
   }
 
-  // Splitting the emoji into its components if it contains a ZWJ
-  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
+  // Parsing the emoji into its components using twemoji-parser
+  const components = TwemojiParser.parse(emoji, { assetType: "png" });
 
   // Retrieving the information for each component of the emoji
   const info = components.map((component) => {
-    let name = EmojiDictionary.getName(component);
+    const emojiChar = component.text;
+    let name = EmojiDictionary.getName(emojiChar);
     name = name === "null" || !name ? "(unknown)" : name;
-    const codepoint = `U+${emojiUnicode(component).toUpperCase()}`;
+    const codepoint = `U+${emojiUnicode(emojiChar).toUpperCase()}`;
 
     // Debug logging
     console.log(
-      `Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`,
+      `Component: ${emojiChar}, Name: ${name}, Codepoint: ${codepoint}`,
     );
 
     return { name, codepoint };
@@ -57,18 +56,19 @@ app.get("/:emoji", (req, res) => {
     return;
   }
 
-  // Splitting the emoji into its components if it contains a ZWJ
-  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
+  // Parsing the emoji into its components using twemoji-parser
+  const components = TwemojiParser.parse(emoji, { assetType: "png" });
 
   // Retrieving the information for each component of the emoji
   const info = components.map((component) => {
-    let name = EmojiDictionary.getName(component);
+    const emojiChar = component.text;
+    let name = EmojiDictionary.getName(emojiChar);
     name = name === "null" || !name ? "(unknown)" : name;
-    const codepoint = `U+${emojiUnicode(component).toUpperCase()}`;
+    const codepoint = `U+${emojiUnicode(emojiChar).toUpperCase()}`;
 
     // Debug logging
     console.log(
-      `Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`,
+      `Component: ${emojiChar}, Name: ${name}, Codepoint: ${codepoint}`,
     );
 
     return { name, codepoint };
