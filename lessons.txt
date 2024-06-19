@@ -1,0 +1,7 @@
+1. Always ensure that the backend receives the entire input emoji sequence. This guarantees that the sequence can be accurately split into individual components for decoding.
+
+2. Splitting the emoji sequence into individual components is crucial for decoding each part correctly. This step ensures that each component's name and Unicode codepoint can be accurately determined.
+
+3. The frontend should be designed to send the entire emoji input to the backend. This ensures that the backend has all the necessary information to perform the decoding process.
+
+4. Handling the backend response on the frontend is essential for displaying each component's decoded information. This step ensures that users can see the results of the decoding process clearly and accurately.
