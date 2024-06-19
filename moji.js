@@ -34,7 +34,7 @@ app.post("/decode", (req, res) => {
     const emojiChar = component.text;
     let name = EmojiDictionary.getName(emojiChar);
     name = name === "null" || !name ? "(unknown)" : name;
-    const codepoint = `U+${emojiUnicode(emojiChar).toUpperCase()}`;
+    const codepoint = emojiUnicode(emojiChar).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
 
     // Debug logging
     console.log(
@@ -64,7 +64,7 @@ app.get("/:emoji", (req, res) => {
     const emojiChar = component.text;
     let name = EmojiDictionary.getName(emojiChar);
     name = name === "null" || !name ? "(unknown)" : name;
-    const codepoint = `U+${emojiUnicode(emojiChar).toUpperCase()}`;
+    const codepoint = emojiUnicode(emojiChar).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
 
     // Debug logging
     console.log(
