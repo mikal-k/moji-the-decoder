@@ -11,6 +11,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static("public_html"));
 
+// Handling favicon.ico request
+app.get("/favicon.ico", (req, res) => res.status(204).end());
+
 // Starting server and listening on port, dynamic if test env
 const port = process.env.NODE_ENV === "test" ? 0 : 2950;
 const server = app.listen(port, () => {
@@ -46,6 +49,7 @@ app.post("/decode", (req, res) => {
 
   res.json(info);
 });
+
 app.get("/:emoji", (req, res) => {
   const emoji = decodeURIComponent(req.params.emoji);
   if (!emoji) {

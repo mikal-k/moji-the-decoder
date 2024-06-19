@@ -114,7 +114,12 @@
 
           if (response.ok) {
             const data = await response.json();
-            resultDiv.innerHTML = `Emoji name: ${data.name}<br>Codepoint: ${data.codepoint}`;
+            resultDiv.innerHTML = ""; // Clear previous results
+            data.forEach(item => {
+              const div = document.createElement("div");
+              div.innerHTML = `Emoji name: ${item.name}<br>Codepoint: ${item.codepoint}`;
+              resultDiv.appendChild(div);
+            });
           } else {
             resultDiv.textContent = "Error: Could not decode emoji.";
           }
