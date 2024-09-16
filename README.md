@@ -9,6 +9,7 @@ Modules used for the app:
 - `body-parser` parses incoming request bodies (req.body)
 - `EmojiDictionary` maps emojis to their names
 - `emoji-unicode` generates the Unicode code point for an emoji
+- `node-emoji`
 
 Modules used for linting and testing:
 - `chai` asserts the results of tests using assertion functions

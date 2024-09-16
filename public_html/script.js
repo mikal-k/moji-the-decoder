@@ -1,21 +1,25 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const emoji = urlParams.get("emoji");
+  if (emoji) {
+    const emojiInput = document.getElementById("emoji-input");
+    emojiInput.value = emoji;
+    // Don't auto-submit here; let the user check the input first
+  }
+});
+
 document.getElementById("decode-form").addEventListener("submit", async function (event) {
   event.preventDefault();
   const emojiInput = document.getElementById("emoji-input");
   const resultDiv = document.getElementById("result");
   const emoji = emojiInput.value;
-  updateURLWithEmoji(emoji);
-
-  function updateURLWithEmoji(emoji) {
-    let url = new URL(window.location.href);
-    let params = new URLSearchParams(url.search);
-    params.set("emoji", emoji);
-    window.history.replaceState({}, "", `${url.pathname}?${params}`);
-  }
 
   if (!emoji) {
     resultDiv.textContent = "Please enter an emoji.";
     return;
   }
+
+  updateURLWithEmoji(emoji); // Update the URL when submitting manually
 
   const response = await fetch("/decode", {
     method: "POST",
@@ -37,7 +41,6 @@ document.getElementById("decode-form").addEventListener("submit", async function
       `;
       resultDiv.appendChild(emojiElement);
 
-      // Add horizontal ruler between emojis
       if (index < data.length - 1) {
         const hr = document.createElement("hr");
         hr.style.width = "80%";
@@ -48,4 +51,13 @@ document.getElementById("decode-form").addEventListener("submit", async function
     resultDiv.textContent = "Error: Could not decode emoji.";
   }
 });
+
+function updateURLWithEmoji(emoji) {
+  let url = new URL(window.location.href);
+  let params = new URLSearchParams(url.search);
+  if (params.get("emoji") !== emoji) { // Only update if different
+    params.set("emoji", emoji);
+    window.history.replaceState({}, "", `${url.pathname}?${params}`);
+  }
+}
 
