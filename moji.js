@@ -21,7 +21,7 @@ const server = app.listen(port, () => {
 // Function to get emoji name with fallback
 function getEmojiName(emoji) {
   let name = EmojiDictionary.getName(emoji);
-  if (name === "null" || !name) {
+  if (!name) {
     const emojiFromNode = nodeEmoji.find(emoji);
     if (emojiFromNode) {
       name = emojiFromNode.key;
@@ -36,23 +36,12 @@ function getEmojiName(emoji) {
 app.post("/decode", (req, res) => {
   const { emoji } = req.body;
   if (!emoji) {
-    res.status(200).json({ error: "No emoji provided" });
+    res.status(400).json({ error: "No emoji provided" });
     return;
   }
 
   // Splitting the emoji into its components if it contains a ZWJ
-  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
-
-  // Retrieving the information for each component of the emoji
-  const info = components.map((component) => {
-    const name = getEmojiName(component);
-    const codepoint = emojiUnicode(component).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
-
-    // Debug logging
-    console.log(`Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`);
-
-    return { name, codepoint };
-  });
+  const info = decodeEmoji(emoji);
 
   console.log("Response data:", info); // Log the response data
 
@@ -62,23 +51,12 @@ app.post("/decode", (req, res) => {
 app.get("/:emoji", (req, res) => {
   const emoji = decodeURIComponent(req.params.emoji);
   if (!emoji) {
-    res.status(200).json({ error: "No emoji provided" });
+    res.status(400).json({ error: "No emoji provided" });
     return;
   }
 
   // Splitting the emoji into its components if it contains a ZWJ
-  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
-
-  // Retrieving the information for each component of the emoji
-  const info = components.map((component) => {
-    const name = getEmojiName(component);
-    const codepoint = emojiUnicode(component).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
-
-    // Debug logging
-    console.log(`Component: ${component}, Name: ${name}, Codepoint: ${codepoint}`);
-
-    return { name, codepoint };
-  });
+  const info = decodeEmoji(emoji);
 
   res.json(info);
 });
@@ -86,3 +64,11 @@ app.get("/:emoji", (req, res) => {
 // Exporting the Express app and server instances for testing
 module.exports = { app, server };
 
+function decodeEmoji(emoji) {
+  const components = emoji.includes("\u200D") ? emoji.split("\u200D") : [emoji];
+  return components.map((component) => {
+    const name = getEmojiName(component);
+    const codepoint = emojiUnicode(component).split(' ').map(part => `U+${part.toUpperCase()}`).join(' ');
+    return { name, codepoint };
+  });
+}

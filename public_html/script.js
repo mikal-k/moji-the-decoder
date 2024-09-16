@@ -21,6 +21,7 @@ document.getElementById("decode-form").addEventListener("submit", async function
 
   updateURLWithEmoji(emoji); // Update the URL when submitting manually
 
+  resultDiv.textContent = "Decoding...";
   const response = await fetch("/decode", {
     method: "POST",
     headers: {
@@ -48,7 +49,8 @@ document.getElementById("decode-form").addEventListener("submit", async function
       }
     });
   } else {
-    resultDiv.textContent = "Error: Could not decode emoji.";
+    const errorData = await response.json();
+    resultDiv.textContent = `Error: ${errorData.error || "Could not decode emoji."}`;
   }
 });
 
