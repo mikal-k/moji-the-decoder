@@ -2,6 +2,7 @@ version: "3"
 
 services:
   moji:
+    container_name: moji
     build:
       context: .
       dockerfile: support/Dockerfile
@@ -12,3 +13,10 @@ services:
     ports:
       - 2950:2950
     command: npm start
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
+networks:
+ default:
+   external:
+     name: mkro
