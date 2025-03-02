@@ -19,7 +19,7 @@
     "eslint": "^9.1.1",
     "husky": "9.0.11",
     "lint-staged": "^15.2.10",
-    "mocha": "10.4.0",
+    "mocha": "10.8.2",
     "supertest": "^7.0.0"
   },
   "scripts": {
